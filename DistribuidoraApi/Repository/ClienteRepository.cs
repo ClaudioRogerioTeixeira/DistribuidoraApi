@@ -22,7 +22,7 @@ namespace DistribuidoraApi.Repository
             .Include(e => e.Enderecos)
             .Include(t => t.Telefones);
 
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 100; i++)
             {
                 cliente.Id = Guid.NewGuid();
                 cliente.Nome = $"{cliente.Nome.Substring(0, 7)} {i}";
