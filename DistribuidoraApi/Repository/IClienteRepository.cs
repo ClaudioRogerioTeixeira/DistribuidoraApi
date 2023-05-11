@@ -8,11 +8,11 @@ namespace DistribuidoraApi.Repository
 {
     public interface IClienteRepository
     {
+        Task<Cliente> Create(Cliente cliente);
+
         Task<IEnumerable<Cliente>> Get();
 
         Task<Cliente> Get(Guid Id);
-
-        Task<Cliente> Create(Cliente cliente);
 
         Task Update(Cliente cliente);
 

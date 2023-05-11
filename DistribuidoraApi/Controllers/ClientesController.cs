@@ -18,6 +18,14 @@ namespace DistribuidoraApi.Controllers
             _clienteRepository = clienteRepository;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Cliente>> PostClientes([FromBody] Cliente cliente)
+        {
+            var newCliente = await _clienteRepository.Create(cliente);
+            return CreatedAtAction(nameof(GetClientes), new { id = newCliente.Id }, newCliente);
+
+        }
+
         [HttpGet]
         public async Task<IEnumerable<Cliente>> GetClientes()
         {
@@ -30,24 +38,6 @@ namespace DistribuidoraApi.Controllers
             return await _clienteRepository.Get(id);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Cliente>> PostClientes([FromBody] Cliente cliente) 
-        {
-            var newCliente =  await _clienteRepository.Create(cliente);
-            return CreatedAtAction(nameof(GetClientes), new { id = newCliente.Id }, newCliente);
-
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Cliente>> Delete(Guid id) 
-        {
-            var clienteToDelete = await _clienteRepository.Get(id);
-            if (clienteToDelete == null)
-                return NotFound();
-
-            await _clienteRepository.Delete(clienteToDelete.Id);                
-            return NoContent();
-        }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Cliente>> PutClientes(Guid id, [FromBody] Cliente cliente ) 
@@ -58,6 +48,17 @@ namespace DistribuidoraApi.Controllers
             await _clienteRepository.Update(cliente);
 
             return NoContent();            
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Cliente>> Delete(Guid id)
+        {
+            var clienteToDelete = await _clienteRepository.Get(id);
+            if (clienteToDelete == null)
+                return NotFound();
+
+            await _clienteRepository.Delete(clienteToDelete.Id);
+            return NoContent();
         }
 
     }
